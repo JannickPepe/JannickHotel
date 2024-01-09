@@ -67,10 +67,19 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "text-reveal": {
+          "0%": {
+            transform: "translate(0, 100%)",
+          },
+          "100%": {
+            transform: "translate(0, 0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "text-reveal": "text-reveal 1s",
       },
     },
   },
