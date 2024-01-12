@@ -36,7 +36,7 @@ const NavBar = () => {
                         <UserButton afterSignOutUrl="/" />
                         { !userId && <>
                             <Button onClick={() => router.push('/sign-in')} variant="outline" size="sm">Sign in</Button>
-                            <Button onClick={() => router.push('/sign-out')} size="sm" >Sign out</Button>
+                            <Button onClick={() => router.push('/sign-up')} size="sm" >Sign up</Button>
                         </> }
                     </div>
                 </div>
