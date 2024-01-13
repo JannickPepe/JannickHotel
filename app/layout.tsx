@@ -5,6 +5,8 @@ import './globals.css'
 import NavBar from '@/components/layout/NavBar'
 import { ThemeProvider } from "@/components/theme-provider"
 import Container from '@/components/Container'
+import { Toaster } from "@/components/ui/toaster"
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,6 +32,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Toaster />
             <main className='flex flex-col min-h-screen bg-secondary'>
               <NavBar />
               <section className='flex-grow'>

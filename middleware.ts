@@ -7,7 +7,7 @@ import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
 
-    publicRoutes: ['/', 'hotel-details/:id', '/api/uploading']
+    publicRoutes: ['/', 'hotel-details/:id', '/api/uploadthing']
 
 });
 
