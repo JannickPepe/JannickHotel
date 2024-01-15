@@ -8,13 +8,26 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Checkbox } from '../ui/checkbox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UploadButton } from '../uploadthing';
 import { useToast } from '../ui/use-toast';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Loader2, XCircle } from 'lucide-react';
 import axios from "axios";
+import useLocation from '@/hooks/useLocations';
+import { ICity, IState } from 'country-state-city';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
+
 
 interface AddHotelFormProps {
     hotel: HotelWithRooms | null;
@@ -62,7 +75,18 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
     const [image, setImage] = useState<string | undefined>(hotel?.image);
     const [imageIsDeleting, setImageIsDeleting] = useState(false);
 
+    const [states, setStates] = useState<IState[]>([]);
+    const [cities, setCities] = useState<ICity[]>([]);
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const { toast } = useToast();
+
+    // Destructur from our useLocation objects
+    const { getAllCountries, getCountrystates, getStateCities } = useLocation();
+    
+    // get All Countries by setting countries to the getAll method
+    const countries = getAllCountries();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -87,12 +111,35 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
             swimmingPool: false,  
             coffeeShop: false,  
         },
-    })
+    });
+
+
+    // We will use useEffect and watch method to the string country
+    useEffect(() => {
+        const selectedCountry = form.watch('country');
+
+        const countryStates = getCountrystates(selectedCountry);
+        if (countryStates) {
+            setStates(countryStates);
+        };
+
+    }, [form.watch('country')])
+
+    // useEffect for updating our cities
+    useEffect(() => {
+        const selectedCountry = form.watch('country');
+        const selectedState = form.watch('state');
+        const stateCities = getStateCities(selectedCountry, selectedState)
+        if (stateCities) {
+            setCities(stateCities);
+        };
+
+    }, [form.watch('country'), form.watch('state')])
 
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
-    }
+    };
 
     const handleImageDelete = (image: string) => {
         setImageIsDeleting(true);
@@ -114,7 +161,7 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
         }).finally(() => {
             setImageIsDeleting(false)
         })
-    }
+    };
 
 
     return ( 
@@ -367,7 +414,102 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
                         </div>
 
                         <div className='flex-1 flex flex-col gap-6'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                                <FormField 
+                                    control={form.control}
+                                    name='country'
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel>select a country *</FormLabel>
+                                            <FormDescription>In which country is your property located?</FormDescription>
+                                            <Select
+                                                disabled={isLoading}
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                            <SelectTrigger className="bg-background">
+                                                <SelectValue defaultValue={field.value} placeholder="Select a Country" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {countries.map((country) => {
+                                                    return  <SelectItem key={country.isoCode} value={country.isoCode}>{country.name}</SelectItem> 
+                                                })}
+                                            </SelectContent>
+                                            </Select>
+                                        </FormItem>
+                                    )}
+                                />
 
+                                <FormField 
+                                    control={form.control}
+                                    name='state'
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel>Select a State *</FormLabel>
+                                            <FormDescription>In which state is your property located?</FormDescription>
+                                            <Select
+                                                disabled={isLoading || states.length < 1}
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                            <SelectTrigger className="bg-background">
+                                                <SelectValue defaultValue={field.value} placeholder="Select a State" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {states.map((state) => {
+                                                    return  <SelectItem key={state.isoCode} value={state.isoCode}>{state.name}</SelectItem> 
+                                                })}
+                                            </SelectContent>
+                                            </Select>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            <FormField 
+                                control={form.control}
+                                name='city'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>select City</FormLabel>
+                                        <FormDescription>In which city is your property located?</FormDescription>
+                                        <Select
+                                            disabled={isLoading || cities.length < 1}
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                            defaultValue={field.value}
+                                        >
+                                        <SelectTrigger className="bg-background">
+                                            <SelectValue defaultValue={field.value} placeholder="Select a City" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {cities.map((city) => {
+                                                return  <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem> 
+                                            })}
+                                        </SelectContent>
+                                        </Select>
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="locationDescription"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Location description *</FormLabel>
+                                        <FormDescription>
+                                            Provide your location description of your Hotel
+                                        </FormDescription>
+                                        <FormControl>
+                                            <Textarea placeholder="Located at the very end of the world" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
                     </div>
                 </form>
