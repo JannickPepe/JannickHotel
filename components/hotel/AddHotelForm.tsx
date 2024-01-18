@@ -13,7 +13,7 @@ import { UploadButton } from '../uploadthing';
 import { useToast } from '../ui/use-toast';
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Eye, Loader2, Pencil, PencilLine, Trash, XCircle } from 'lucide-react';
+import { CheckCircle, Eye, Loader2, Pencil, PencilLine, PlusCircle, Terminal, Trash, XCircle } from 'lucide-react';
 import axios from "axios";
 import useLocation from '@/hooks/useLocations';
 import { ICity, IState } from 'country-state-city';
@@ -25,8 +25,22 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 import { useRouter } from 'next/navigation';
+import AddRoomForm from '../room/AddRoomForm';
 
 
 
@@ -83,7 +97,10 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     // create the state for delete hotel
-    const [isHotelDeleting, setIsHotelDeleting] = useState(false)
+    const [isHotelDeleting, setIsHotelDeleting] = useState(false);
+
+    // state for your room dialog
+    const [open, setOpen] = useState(false);
 
     const { toast } = useToast();
 
@@ -251,6 +268,12 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
             setImageIsDeleting(false)
         })
     };
+
+    // Create the handleDialogueOpen function
+    const handleDialogueOpen = () => {
+        // get the oppisite of the previous state
+        setOpen(prev => !prev)
+    }
 
 
     return ( 
@@ -600,6 +623,15 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
                                 )}
                             />
 
+                            {hotel && !hotel.rooms.length && <Alert className='bg-indigo-600 text-white'>
+                                <Terminal className="h-4 w-4 stroke-white" />
+                                <AlertTitle>One Last Step!</AlertTitle>
+                                <AlertDescription>
+                                    Your Hotel was created successfully<CheckCircle className='ml-2 h-4 w-4 inline-block text-lime-500' />
+                                    <div>- Please add some Rooms to complete your Hotel setup</div>
+                                </AlertDescription>
+                            </Alert>}
+
                             <div className='flex flex-wrap justify-between gap-2'>
                                 {/* Delete button */}
                                 {
@@ -613,6 +645,26 @@ const AddHotelForm = ({hotel} : AddHotelFormProps) => {
 
                                 {/* View button */}
                                 {hotel && <Button onClick={() => router.push(`/hotel-details/${hotel.id}`)} variant='outline' type='button'><Eye className='mr-2 h-4 w-4' /> View</Button>}
+
+                                {/* Open Modal button */}
+                                {hotel && 
+                                    <Dialog open={open} onOpenChange={setOpen} >
+                                        <DialogTrigger>
+                                            <Button type='button' variant='outline' className='max-w-[150px]' >
+                                                <PlusCircle className='mr-2 h-4 w-4' /> Add Room
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="max-w-[900px] w-[90%]">
+                                            <DialogHeader className='px-2'>
+                                                <DialogTitle>Add a Room</DialogTitle>
+                                                <DialogDescription>
+                                                    Add the details about the Room in the Hotel
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <AddRoomForm hotel={hotel} handleDialogueOpen={handleDialogueOpen}/>
+                                        </DialogContent>
+                                    </Dialog>
+                                }
 
                                 {/* Updating button */}
                                 {
