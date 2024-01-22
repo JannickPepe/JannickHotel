@@ -1,7 +1,9 @@
+
 import { Room } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+// Interface
 interface BookRoomStore {
   bookingRoomData: RoomDataType | null;
   paymentIntentId: string | null;
@@ -12,6 +14,7 @@ interface BookRoomStore {
   resetBookRoom: () => void;
 }
 
+// Type
 type RoomDataType = {
   room: Room;
   totalPrice: number;
@@ -19,6 +22,7 @@ type RoomDataType = {
   startDate: Date;
   endDate: Date;
 };
+
 
 const useBookRoom = create<BookRoomStore>()(
   persist(

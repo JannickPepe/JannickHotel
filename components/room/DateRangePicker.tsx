@@ -8,12 +8,10 @@ import { DateRange } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
+
+// Interface
 interface DatePickerProps {
     className?: React.HTMLAttributes<HTMLDivElement>;
     date: DateRange | undefined;
@@ -21,6 +19,7 @@ interface DatePickerProps {
     disabledDates: Date[];
 }
 
+// Export function -
 export function DatePickerWithRange({ className, date, setDate, disabledDates }: DatePickerProps) {
 
     return (
@@ -64,5 +63,6 @@ export function DatePickerWithRange({ className, date, setDate, disabledDates }:
                 </PopoverContent>
             </Popover>
         </div>
-    )
-}
+    );
+
+};
