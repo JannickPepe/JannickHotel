@@ -20,7 +20,7 @@ const NavBar = () => {
 
 
     return (
-        <div className="sticky top-0 border border-b-primary/10 bg-secondary">
+        <div className="sticky top-0 border border-b-primary/10 bg-secondary z-50">
             <Container>
                 <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push('/')}>

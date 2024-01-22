@@ -5,9 +5,10 @@ import { HotelWithRooms } from "./AddHotelForm";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import AmenityItem from "../AmenityItem";
-import { Dumbbell, MapPin, Waves } from "lucide-react";
+import { Dumbbell, MapPin } from "lucide-react";
 import useLocation from "@/hooks/useLocations";
 import { Button } from "../ui/button";
+import { FaSwimmer } from "react-icons/fa";
 
 const HotelCard = ({hotel}: {hotel: HotelWithRooms}) => {
 
@@ -27,7 +28,7 @@ const HotelCard = ({hotel}: {hotel: HotelWithRooms}) => {
     return ( 
         <div onClick={() => !isMyHotels  && router.push(`/hotel-details/${hotel.id}`)} className={cn('col-span-1 cursor-pointer transition hover:scale-105', isMyHotels && 'cursor-default')} >
             <div className="flex gap-2 bg-background/50 border border-primary/10 rounded-lg">
-                <div className="flex-1 aspect-square overflow-hidden relative w-full h-[210px] rounded-s-lg">
+                <div className="flex-1 aspect-square overflow-hidden relative w-full min-h-[210px] rounded-s-lg">
                     <Image className="w-full h-full object-cover" fill src={hotel.image} alt={hotel.title} />
                 </div>
 
@@ -40,7 +41,7 @@ const HotelCard = ({hotel}: {hotel: HotelWithRooms}) => {
                         </AmenityItem>
                         {hotel.swimmingPool && 
                             <AmenityItem>
-                                <Waves className="size-4" /> Pool
+                                <FaSwimmer size={18} /> Pool
                             </AmenityItem>
                         }
                         {hotel.gym && 
