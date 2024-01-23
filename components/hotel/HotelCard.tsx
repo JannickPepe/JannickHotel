@@ -24,7 +24,7 @@ const HotelCard = ({hotel}: {hotel: HotelWithRooms}) => {
     const country = getCountryByCode(hotel.country)
 
 
-    // With cn we overwrite in our classname between the 2x ('') with the given style keyword for if no Hotels or with Hotels boolean
+    // With CN we overwrite in our classname between the 2x ('') with the given style keyword for - if no Hotels or with Hotels boolean
     return ( 
         <div onClick={() => !isMyHotels  && router.push(`/hotel-details/${hotel.id}`)} className={cn('col-span-1 cursor-pointer transition hover:scale-105', isMyHotels && 'cursor-default')} >
             <div className="flex gap-2 bg-background/50 border border-primary/10 rounded-lg">

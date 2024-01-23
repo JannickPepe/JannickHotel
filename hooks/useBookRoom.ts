@@ -3,7 +3,8 @@ import { Room } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Interface
+
+// Interface for BookRoomStore which we be connected to types by setRoomData and being used in our useBookRoom const
 interface BookRoomStore {
   bookingRoomData: RoomDataType | null;
   paymentIntentId: string | null;
@@ -14,7 +15,7 @@ interface BookRoomStore {
   resetBookRoom: () => void;
 }
 
-// Type
+// Type - where we define the RoomDataType
 type RoomDataType = {
   room: Room;
   totalPrice: number;
@@ -24,7 +25,9 @@ type RoomDataType = {
 };
 
 
+// Usage of useBookRoom with persist and we invoke that with the () after <BookRoomStore>
 const useBookRoom = create<BookRoomStore>()(
+  // Usage of persist where we have set as the first parameter with the given properties and then we have name: "BookRoom" as second paremeter with the property name.
   persist(
     (set) => ({
       bookingRoomData: null,
@@ -47,10 +50,13 @@ const useBookRoom = create<BookRoomStore>()(
         });
       },
     }),
+    // We use LocalStorage as default
     {
       name: "BookRoom",
     }
   )
+
 );
+
 
 export default useBookRoom;
