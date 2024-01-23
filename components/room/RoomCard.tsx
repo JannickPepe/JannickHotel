@@ -38,9 +38,13 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     const [isLoading, setIsLoading] = useState(false)
     const [bookingIsLoading, setBookingIsLoading] = useState(false)
     const [open, setOpen] = useState(false)
+
+    // This will be passed down in the DateRangePicker components as props with date and setDate
     const [date, setDate] = useState<DateRange | undefined>()
+    // By default we have the room.roomPrice in our useState
     const [totalPrice, setTotalPrice] = useState(room.roomPrice)
     const [includeBreakFast, setIncludeBreakFast] = useState(false)
+    // With this state we will hold our day count with default value 1 day
     const [days, setDays] = useState(1)
 
     const router = useRouter()
@@ -52,7 +56,8 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     const isHotelDetailsPage = pathname.includes('hotel-details')
     const isBookRoom = pathname.includes('book-room')
 
-    // UseEffect for Calender picker
+
+    // UseEffect for Calender picker, with date changes and room price changes
     useEffect(() => {
         if (date && date.from && date.to) {
             const dayCount = differenceInCalendarDays(
@@ -62,6 +67,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
 
             setDays(dayCount)
 
+            // Perform the calculation with days and the price from default to amount of days price + if we include breakfeast 
             if (dayCount && room.roomPrice) {
                 if (includeBreakFast && room.breakFastPrice) {
                     setTotalPrice((dayCount * room.roomPrice) + (dayCount * room.breakFastPrice))
@@ -73,6 +79,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
             }
         }
     }, [date, room.roomPrice, includeBreakFast]);
+
 
     //
     const disabledDates = useMemo(() => {
@@ -95,6 +102,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     const handleDialogueOpen = () => {
         setOpen(prev => !prev)
     };
+
 
     // handleRoomDelete method on onClick with room parameter onto Room Schema
     const handleRoomDelete = (room: Room) => {
@@ -235,6 +243,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
 
             </CardContent>
 
+            {/* If there is any room show the rooms with booking */}
             {!isBookRoom && <CardFooter>
                 {
                     isHotelDetailsPage ? <div className="flex flex-col gap-6">
@@ -242,11 +251,14 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
                             <div className="mb-2">Select days that you will spend in this room</div>
                             <DatePickerWithRange date={date} setDate={setDate} disabledDates={disabledDates} />
                         </div>
+                        {/* Check if we have room with breakFastPrice by having the value greater than 0 */}
                         {
                             room.breakFastPrice > 0 && <div>
                                 <div className="mb-2">Do you want to be served breakfast each day</div>
                                 <div className="flex items-center space-x-2">
+                                    {/* Invoke arrow function onCheckedChange where we pass paramter value and set it to setInclude... Value can sometimes be a number therefor we make the ! and ! cuz its a boolean */}
                                     <Checkbox id="breakFast" onCheckedChange={(value) => setIncludeBreakFast(!!value)} />
+                                    {/* When we click on the checkbox it will give us the price with breakFeast from the calculator in useEffect */}
                                     <label htmlFor="breakFast" className="text-sm">Include Breakfast</label>
                                 </div>
                             </div>

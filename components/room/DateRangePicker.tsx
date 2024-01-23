@@ -11,7 +11,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover"
 
 
-// Interface
+// Interface - 
 interface DatePickerProps {
     className?: React.HTMLAttributes<HTMLDivElement>;
     date: DateRange | undefined;
@@ -19,7 +19,7 @@ interface DatePickerProps {
     disabledDates: Date[];
 }
 
-// Export function -
+// Export function - we destructor classname, date and such in our DatePicker function where we also pass down DatePickerProps
 export function DatePickerWithRange({ className, date, setDate, disabledDates }: DatePickerProps) {
 
     return (
