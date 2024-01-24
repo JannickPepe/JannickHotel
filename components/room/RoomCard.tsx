@@ -34,8 +34,10 @@ interface RoomCardProps {
 
 const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
 
+    // We call our useBookRoom we the destructored the values / hooks
     const { setRoomData, paymentIntentId, setClientSecret, setPaymentIntentId } = useBookRoom()
     const [isLoading, setIsLoading] = useState(false)
+    // Setup the onClick event for the boolean case with ? and : with bookingIsLoading
     const [bookingIsLoading, setBookingIsLoading] = useState(false)
     const [open, setOpen] = useState(false)
 
@@ -133,7 +135,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
         });
     };
 
-    // handleBookRoom method on onClick
+    // handleBookRoom method on onClick which takes data from bookingRoomData from our useBookRoom.ts and use route in create-payment-intent folder as our axios endpoint path
     const handleBookRoom = () => {
         if (!userId) return toast({
             variant: 'destructive',
@@ -158,6 +160,7 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
 
             setRoomData(bookingRoomData)
 
+            // Fetch from the endpoint path and use method and headers property and have the JSON.stringify to convert data to string into our db 
             fetch('/api/create-payment-intent', {
                 method: 'POST',
                 headers: {
@@ -266,10 +269,12 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
                         <div>
                             Total Price: <span className="font-bold">${totalPrice}</span> for <span className="font-bold">{days} Days</span>
                         </div>
+
                         <Button onClick={() => handleBookRoom()} disabled={bookingIsLoading} type="button">
                             {bookingIsLoading ? <Loader2 className="mr-2 h-4 w-4" /> : <Wand2 className="mr-2 h-4 w-4" />}
                             {bookingIsLoading ? 'Loading...' : 'Book Room'}
                         </Button>
+
                     </div> : <div className="flex w-full justify-between">
                         <Button disabled={isLoading} type="button" variant='ghost' onClick={() => handleRoomDelete(room)}>
                             {isLoading ? <><Loader2 className="mr-2 h-4 w-4 text-red-500" /> Deleting...</> : <><Trash className="mr-2 h-4 w-4 text-red-500" /><span className="text-red-500"> Delete</span></>}

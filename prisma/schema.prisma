@@ -83,6 +83,7 @@ model Room {
 model Booking {
   id String @id @default(uuid())
   userName String
+  userEmail String
   userId String 
   hotelId String
   roomId String
@@ -93,7 +94,7 @@ model Booking {
   currency String
   totalPrice Int
   paymentStatus Boolean @default(false)
-  paymentIntent String @unique
+  paymentIntentId String @unique
   bookedAt DateTime @default(now())
 
   Hotel Hotel? @relation(fields: [hotelId], references: [id])
