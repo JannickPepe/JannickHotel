@@ -83,13 +83,16 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
     }, [date, room.roomPrice, includeBreakFast]);
 
 
-    //
+    // takes the values from getBookings.ts and hotelId page.tsx
+    // It does
     const disabledDates = useMemo(() => {
+        // create variable dates and pass interface Date array
         let dates: Date[] = []
 
         const roomBookings = bookings.filter(booking => booking.roomId === room.id && booking.paymentStatus)
 
         roomBookings.forEach(booking => {
+            // create range that will take every day as an interval from start to end
             const range = eachDayOfInterval({
                 start: new Date(booking.startDate),
                 end: new Date(booking.endDate)
@@ -99,8 +102,11 @@ const RoomCard = ({ hotel, room, bookings = [] }: RoomCardProps) => {
         })
 
         return dates
+        
     }, [bookings]);
 
+
+    // 
     const handleDialogueOpen = () => {
         setOpen(prev => !prev)
     };

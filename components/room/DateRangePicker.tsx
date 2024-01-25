@@ -12,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popove
 
 
 // Interface - 
+ // so it can be passed down in our RoomCard.tsx onto the DatePickerWithRange component
 interface DatePickerProps {
     className?: React.HTMLAttributes<HTMLDivElement>;
     date: DateRange | undefined;
