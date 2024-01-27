@@ -19,6 +19,7 @@ const BookRoomClient = () => {
     const { theme } = useTheme()
     const router = useRouter()
 
+    // useEffect - it will run after our page fully loads, since we set it as true
     useEffect(() => {
         setPageLoaded(true)
     }, [])
@@ -35,6 +36,7 @@ const BookRoomClient = () => {
         setPaymentSuccess(value)
     }
 
+    // show this if we have pageLoaded and no paymentSuccess and no bookingRoomData or no clientSecrey key
     if (pageLoaded && !paymentSuccess && (!bookingRoomData || !clientSecret)) return <div className='flex items-center flex-col gap-4'>
         <div className='text-rose-500'>Oops! This page could not be propery loaded...</div>
         <div className='flex items-center gap-4'>

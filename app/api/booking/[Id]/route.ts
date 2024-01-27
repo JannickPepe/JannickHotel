@@ -25,6 +25,7 @@ export async function PATCH(req: Request, { params }: { params: { Id: string } }
     });
 
     return NextResponse.json(booking);
+    
   } catch (error) {
     console.log("Error at /api/booking/Id PATCH", error);
     return new NextResponse("Internal Server Error", { status: 500 });
@@ -53,6 +54,7 @@ export async function DELETE(req: Request, { params }: { params: { Id: string } 
     });
 
     return NextResponse.json(booking);
+
   } catch (error) {
     console.log("Error at /api/booking/Id DELETE", error);
     return new NextResponse("Internal Server Error", { status: 500 });
@@ -88,6 +90,7 @@ export async function GET(req: Request, { params }: { params: { Id: string } }) 
     });
 
     return NextResponse.json(bookings);
+
   } catch (error) {
     console.log("Error at /api/booking/Id GET", error);
     return new NextResponse("Internal Server Error", { status: 500 });

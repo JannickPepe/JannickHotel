@@ -29,6 +29,7 @@ type DateRangesType = {
 
 // Our function hasOverlap
 function hasOverlap(startDate: Date, endDate: Date, dateRanges: DateRangesType[]) {
+    // create a targetInterval
     const targetInterval = { start: startOfDay(new Date(startDate)), end: endOfDay(new Date(endDate)) }
 
     for (const range of dateRanges) {
@@ -83,15 +84,19 @@ const RoomPaymentForm = ({ clientSecret, handleSetPaymentSuccess }: RoomPaymentF
 
         try {
             //date overlaps
+            // We fetch all the bookings with our const bookings
             const bookings = await axios.get(`/api/booking/${bookingRoomData.room.id}`)
 
+            // Here with const roomBookingDtes we go over all the bookings and return start and end date on a booking
             const roomBookingDates = bookings.data.map((booking: Booking) => {
+                // here we are passing startDate and endDate props with the parameters from booking onto the prop
                 return {
                     startDate: booking.startDate,
                     endDate: booking.endDate
                 }
             })
 
+            // Const overlapFound  which contaains the function hasOverlap with the giving values
             const overlapFound = hasOverlap(bookingRoomData.startDate, bookingRoomData.endDate, roomBookingDates)
 
             if (overlapFound) {
