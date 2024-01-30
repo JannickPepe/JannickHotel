@@ -1,3 +1,4 @@
+
 import { getHotels } from "@/actions/getHotels";
 import HotelList from "@/components/hotel/HotelList";
 
@@ -10,6 +11,7 @@ interface HomeProps {
     city: string,
   }
 };
+
 
 export default async function Home({searchParams}: HomeProps) {
 
