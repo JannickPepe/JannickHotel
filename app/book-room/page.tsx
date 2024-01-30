@@ -1,5 +1,5 @@
 
-import BoomRoomClient from "@/components/Booking/BookRoomClient";
+import BoomRoomClient from "@/components/booking/BookRoomClient";
 
 
 const BookRoom = () => {
