@@ -1,12 +1,12 @@
 
-import BoomRoomClient from "@/components/booking/BookRoomClient";
+import BookRoomClient from "@/components/booking/BookRoomClient";
 
 
 const BookRoom = () => {
 
     return ( 
         <div className="p-8">
-            <BoomRoomClient/>
+            <BookRoomClient/>
         </div>
     );
 
