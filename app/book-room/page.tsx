@@ -1,12 +1,10 @@
 
 import BookRoomClient from "@/components/booking/BookRoomClient";
 
-
 const BookRoom = () => {
-
-    return ( 
+    return (
         <div className="p-8">
-            <BookRoomClient/>
+            <BookRoomClient />
         </div>
     );
 

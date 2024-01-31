@@ -1,7 +1,7 @@
 
 import { getBookingsByHotelOwnerId } from "@/actions/getBookingsByHotelOwnerId";
 import { getBookingsByUserId } from "@/actions/getBookingsByUserId";
-import MyBookingsClient from "@/components/booking/MyBookingsClient";
+import MyBookingClient from "@/components/booking/MyBookingsClient";
 
 
 const MyBookings = async () => {
@@ -17,7 +17,7 @@ const MyBookings = async () => {
                 <div>
                     <h2 className="text-xl md:text-2xl font-semibold mb-6 mt-2">Here are bookings you have made</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {bookingsIHaveMade.map(booking => <MyBookingsClient key={booking.id} booking={booking} />
+                        {bookingsIHaveMade.map(booking => <MyBookingClient key={booking.id} booking={booking} />
                         )}
                     </div>
                 </div>
@@ -27,7 +27,7 @@ const MyBookings = async () => {
                 <div>
                     <h2 className="text-xl md:text-2xl font-semibold mb-6 mt-2">Here are bookings visitors have made on your properties</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {bookingsFromVisitors.map(booking => <MyBookingsClient key={booking.id} booking={booking} />
+                        {bookingsFromVisitors.map(booking => <MyBookingClient key={booking.id} booking={booking} />
                         )}
                     </div>
                 </div>
