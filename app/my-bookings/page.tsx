@@ -1,7 +1,7 @@
 
 import { getBookingsByHotelOwnerId } from "@/actions/getBookingsByHotelOwnerId";
 import { getBookingsByUserId } from "@/actions/getBookingsByUserId";
-import MyBookingClient from "../../components/booking/MyBookingsClient";
+import MyBookingClient from "@/components/booking/MyBookingsClient";
 
 
 const MyBookings = async () => {
