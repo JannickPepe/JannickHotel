@@ -103,7 +103,7 @@ const LocationFilter = () => {
     
     return ( 
         <Container> 
-            <div className="flex gap-2 md:gap-4 items-center justify-center text-sm">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 mx-auto max-w-[400px] text-sm">
                 <div>
                     <Select onValueChange={(value) => setCountry(value)} value={country}>
                         <SelectTrigger className="bg-background">

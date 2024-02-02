@@ -1,6 +1,7 @@
 
 import { getHotels } from "@/actions/getHotels";
 import HotelList from "@/components/hotel/HotelList";
+import Hero from "@/components/Hero/Hero"
 
 
 interface HomeProps {
@@ -21,7 +22,8 @@ export default async function Home({searchParams}: HomeProps) {
 
   return (
     
-    <div>
+    <div className="mb-8">
+      <Hero />
       <HotelList hotels={hotels} />
     </div>
       
