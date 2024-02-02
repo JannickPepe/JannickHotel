@@ -2,6 +2,7 @@
 import { getHotels } from "@/actions/getHotels";
 import HotelList from "@/components/hotel/HotelList";
 import Hero from "@/components/Hero/Hero"
+import LocationFilter from "@/components/LocationFilter";
 
 
 interface HomeProps {
@@ -24,6 +25,7 @@ export default async function Home({searchParams}: HomeProps) {
     
     <div className="mb-8">
       <Hero />
+      <LocationFilter />
       <HotelList hotels={hotels} />
     </div>
       

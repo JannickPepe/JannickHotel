@@ -83,4 +83,16 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .hover-underline-animation {
+    @apply inline-block relative;
+  }
+  
+  .hover-underline-animation::after {
+    @apply dark:bg-indigo-500 bg-indigo-500 content-[''] absolute w-full scale-x-0 h-[2px] bottom-0 left-0 origin-left transition-all ease-in-out;
+  }
+  
+  .hover-underline-animation:hover::after {
+    @apply scale-x-100;
+  }
 }
